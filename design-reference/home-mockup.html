@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rodolfo Leal — mockup Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14191A;
+    --surface: #1D2422;
+    --line: #2A322F;
+    --ink: #EDEFEC;
+    --ink-muted: #B7BDB8;
+    --aqua: #7FFFD4;
+    --amber: #D9924A;
+    --olive: #9CAE6E;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  .page{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ---------- SIDEBAR "FICHA" ---------- */
+
+  .ficha{
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    padding: 28px 32px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ficha-name{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .ficha-role{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--aqua);
+    margin: 0 0 4px;
+  }
+
+  .ficha-location{
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .ficha-divider{
+    height: 1px;
+    background: var(--line);
+    margin: 18px 0;
+    border: none;
+  }
+
+  .ficha-specs dt{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+
+  .ficha-specs dd{
+    margin: 0 0 12px;
+    font-size: 14px;
+  }
+
+  .stack-chips{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--ink-muted);
+    background: transparent;
+  }
+
+  .ficha-nav{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ficha-nav a{
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--ink-muted);
+    transition: color 0.15s ease;
+  }
+
+  .ficha-nav a:hover,
+  .ficha-nav a:focus-visible{
+    color: var(--ink);
+  }
+
+  .ficha-nav a.active{
+    color: var(--ink);
+  }
+
+  .ficha-footer{
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .btn{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 18px;
+    border-radius: 3px;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn:hover{ transform: translateY(-1px); }
+
+  .btn-filled{
+    background: var(--amber);
+    color: #1A1408;
+  }
+
+  .btn-filled:hover{ opacity: 0.92; }
+
+  .social-links{
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+  }
+
+  .social-links a{
+    text-decoration: none;
+    color: var(--ink-muted);
+    border-bottom: 1px solid transparent;
+  }
+
+  .social-links a:hover,
+  .social-links a:focus-visible{
+    color: var(--ink);
+    border-bottom-color: var(--ink-muted);
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+
+  main{
+    padding: 100px 64px 80px;
+    max-width: 900px;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(8px);
+    animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 0s);
+  }
+
+  @keyframes reveal{
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 4.2vw, 52px);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin: 0 0 24px;
+    max-width: 14ch;
+  }
+
+  .hero p{
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    max-width: 52ch;
+    margin: 0 0 36px;
+  }
+
+  .hero-ctas{
+    display: flex;
+    gap: 14px;
+    margin-bottom: 90px;
+  }
+
+  .btn-outline{
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+
+  .btn-outline:hover,
+  .btn-outline:focus-visible{
+    border-color: var(--ink-muted);
+  }
+
+  /* ---------- STATS (spec sheet row) ---------- */
+
+  .stats{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 90px;
+  }
+
+  .stat{
+    padding: 28px 24px 28px 0;
+    border-right: 1px solid var(--line);
+  }
+
+  .stat:last-child{ border-right: none; padding-right: 0; }
+
+  .stat-value{
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 34px;
+    color: var(--aqua);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .stat-label{
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  /* ---------- SKILLS MARQUEE ---------- */
+
+  .skills-section h2{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    margin: 0 0 20px;
+  }
+
+  .marquee{
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .marquee-track{
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    animation: scroll 32s linear infinite;
+  }
+
+  .marquee:hover .marquee-track{
+    animation-play-state: paused;
+  }
+
+  @keyframes scroll{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+
+  .marquee .chip{
+    font-size: 13px;
+    padding: 8px 14px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .marquee .chip:nth-child(3n){ border-color: var(--olive); }
+  .marquee .chip:nth-child(4n){ border-color: var(--amber); }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ animation: none; opacity: 1; transform: none; }
+    .marquee-track{ animation: none; }
+  }
+
+  @media (max-width: 860px){
+    .page{ grid-template-columns: 1fr; }
+    .ficha{
+      position: relative;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+    main{ padding: 56px 24px 64px; }
+    .stats{ grid-template-columns: 1fr; }
+    .stat{ border-right: none; border-bottom: 1px solid var(--line); padding: 20px 0; }
+    .stat:last-child{ border-bottom: none; }
+    .ficha-footer{ margin-top: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="ficha">
+    <div class="reveal" style="--d: 0s">
+      <p class="ficha-name">Rodolfo Leal</p>
+      <p class="ficha-role">Desenvolvedor Front-End Pleno</p>
+      <p class="ficha-location">Curitiba, PR</p>
+    </div>
+
+    <hr class="ficha-divider reveal" style="--d: .1s" />
+
+    <dl class="ficha-specs reveal" style="--d: .18s">
+      <dt>Especialização</dt>
+      <dd>E-commerce &amp; performance</dd>
+
+      <dt>Stack principal</dt>
+      <dd>
+        <div class="stack-chips">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">PHP</span>
+        </div>
+      </dd>
+
+      <dt>Idiomas</dt>
+      <dd>Português, Inglês</dd>
+    </dl>
+
+    <hr class="ficha-divider reveal" style="--d: .26s" />
+
+    <nav class="ficha-nav reveal" style="--d: .32s">
+      <a href="#" class="active">Home</a>
+      <a href="#">Sobre</a>
+      <a href="#">Projetos</a>
+    </nav>
+
+    <div class="ficha-footer reveal" style="--d: .4s">
+      <a href="#" class="btn btn-filled">Baixar currículo</a>
+      <div class="social-links">
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="reveal" style="--d: .75s">Desenvolvedor Front-End especializado em e-commerce de alta performance.</h1>
+      <p class="reveal" style="--d: .85s">Mais de 5 anos construindo e mantendo lojas online — de +20 e-commerces desenvolvidos à evolução de plataformas de grande volume.</p>
+      <div class="hero-ctas reveal" style="--d: .95s">
+        <a href="#" class="btn btn-outline">Ver projetos</a>
+        <a href="#" class="btn btn-outline">Fale comigo</a>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat reveal" style="--d: 1.05s">
+        <span class="stat-value">5+</span>
+        <span class="stat-label">anos de experiência</span>
+      </div>
+      <div class="stat reveal" style="--d: 1.11s">
+        <span class="stat-value">20+</span>
+        <span class="stat-label">lojas online desenvolvidas</span>
+      </div>
+      <div class="stat reveal" style="--d: 1.17s">
+        <span class="stat-value">+60%</span>
+        <span class="stat-label">crescimento de tráfego (SEO)</span>
+      </div>
+    </section>
+
+    <section class="skills-section reveal" style="--d: 1.27s">
+      <h2>Tecnologias</h2>
+      <div class="marquee">
+        <div class="marquee-track">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Tailwind CSS</span>
+          <span class="chip">HTML5</span>
+          <span class="chip">CSS3</span>
+          <span class="chip">PHP</span>
+          <span class="chip">Magento</span>
+          <span class="chip">Tray</span>
+          <span class="chip">SEO</span>
+          <span class="chip">Git</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Figma</span>
+          <!-- duplicated for seamless loop -->
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Tailwind CSS</span>
+          <span class="chip">HTML5</span>
+          <span class="chip">CSS3</span>
+          <span class="chip">PHP</span>
+          <span class="chip">Magento</span>
+          <span class="chip">Tray</span>
+          <span class="chip">SEO</span>
+          <span class="chip">Git</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Figma</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</div>
+
+</body>
+</html>

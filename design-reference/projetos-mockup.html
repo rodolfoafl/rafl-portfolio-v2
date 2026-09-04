@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rodolfo Leal — mockup Projetos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14191A;
+    --surface: #1D2422;
+    --line: #2A322F;
+    --ink: #EDEFEC;
+    --ink-muted: #B7BDB8;
+    --aqua: #7FFFD4;
+    --amber: #D9924A;
+    --olive: #9CAE6E;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  .page{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ---------- SIDEBAR "FICHA" (idêntica à Home/Sobre) ---------- */
+
+  .ficha{
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    padding: 28px 32px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ficha-name{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .ficha-role{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--aqua);
+    margin: 0 0 4px;
+  }
+
+  .ficha-location{
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .ficha-divider{
+    height: 1px;
+    background: var(--line);
+    margin: 18px 0;
+    border: none;
+  }
+
+  .ficha-specs dt{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+
+  .ficha-specs dd{
+    margin: 0 0 12px;
+    font-size: 14px;
+  }
+
+  .stack-chips{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--ink-muted);
+    background: transparent;
+  }
+
+  .ficha-nav{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ficha-nav a{
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--ink-muted);
+    transition: color 0.15s ease;
+  }
+
+  .ficha-nav a:hover,
+  .ficha-nav a:focus-visible{
+    color: var(--ink);
+  }
+
+  .ficha-nav a.active{
+    color: var(--ink);
+  }
+
+  .ficha-footer{
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .btn{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 18px;
+    border-radius: 3px;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn:hover{ transform: translateY(-1px); }
+
+  .btn-filled{
+    background: var(--amber);
+    color: #1A1408;
+  }
+
+  .btn-filled:hover{ opacity: 0.92; }
+
+  .social-links{
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+  }
+
+  .social-links a{
+    text-decoration: none;
+    color: var(--ink-muted);
+    border-bottom: 1px solid transparent;
+  }
+
+  .social-links a:hover,
+  .social-links a:focus-visible{
+    color: var(--ink);
+    border-bottom-color: var(--ink-muted);
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+
+  main{
+    padding: 100px 64px 100px;
+    max-width: 820px;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(8px);
+    animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 0s);
+  }
+
+  @keyframes reveal{
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal-on-scroll{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-on-scroll.in-view{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .page-header h1{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.2vw, 38px);
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+  }
+
+  .lead{
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    max-width: 62ch;
+    margin: 0 0 90px;
+  }
+
+  .project-group{ margin-bottom: 90px; }
+  .project-group:last-child{ margin-bottom: 0; }
+
+  .project-group-head{ margin-bottom: 24px; }
+
+  .project-group-head h2{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 0 6px;
+  }
+
+  .project-group-period{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  .project-group-note{
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    max-width: 62ch;
+    margin: 14px 0 0;
+    padding: 14px 16px;
+    border-left: 2px solid var(--aqua);
+    background: var(--surface);
+  }
+
+  .project-group-note.neutral{
+    border-left-color: var(--ink-muted);
+  }
+
+  .project-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .project-item{
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .project-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-bottom: 10px;
+  }
+
+  .project-head h3{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .project-period{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .project-desc{
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    max-width: 60ch;
+    margin: 0 0 14px;
+  }
+
+  .project-meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .project-links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+
+  .project-link{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--aqua);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .project-link:hover,
+  .project-link:focus-visible{
+    border-bottom-color: var(--aqua);
+  }
+
+  .project-link.disabled{
+    color: var(--ink-muted);
+    cursor: default;
+  }
+
+  .project-image-placeholder{
+    margin-top: 12px;
+    padding: 20px;
+    border: 1px dashed var(--line);
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ animation: none; opacity: 1; transform: none; }
+    .reveal-on-scroll{ opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 860px){
+    .page{ grid-template-columns: 1fr; }
+    .ficha{
+      position: relative;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+    main{ padding: 56px 24px 64px; }
+    .ficha-footer{ margin-top: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="ficha">
+    <div class="reveal" style="--d: 0s">
+      <p class="ficha-name">Rodolfo Leal</p>
+      <p class="ficha-role">Desenvolvedor Front-End Pleno</p>
+      <p class="ficha-location">Curitiba, PR</p>
+    </div>
+
+    <hr class="ficha-divider reveal" style="--d: .1s" />
+
+    <dl class="ficha-specs reveal" style="--d: .18s">
+      <dt>Especialização</dt>
+      <dd>E-commerce &amp; performance</dd>
+
+      <dt>Stack principal</dt>
+      <dd>
+        <div class="stack-chips">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">PHP</span>
+        </div>
+      </dd>
+
+      <dt>Idiomas</dt>
+      <dd>Português, Inglês</dd>
+    </dl>
+
+    <hr class="ficha-divider reveal" style="--d: .26s" />
+
+    <nav class="ficha-nav reveal" style="--d: .32s">
+      <a href="#">Home</a>
+      <a href="#">Sobre</a>
+      <a href="#" class="active">Projetos</a>
+    </nav>
+
+    <div class="ficha-footer reveal" style="--d: .4s">
+      <a href="#" class="btn btn-filled">Baixar currículo</a>
+      <div class="social-links">
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h1 class="reveal" style="--d: .75s">Projetos</h1>
+      <p class="lead reveal" style="--d: .85s">Uma seleção dos projetos e sistemas em que atuei — do e-commerce de grande volume na Fagundez às mais de 20 lojas online desenvolvidas na Novovarejo.com.</p>
+    </section>
+
+    <!-- GRUPO 1 — FAGUNDEZ -->
+    <section class="project-group">
+      <div class="project-group-head reveal-on-scroll">
+        <h2>Fagundez Distribuição</h2>
+        <span class="project-group-period">Abril 2025 — atualmente</span>
+      </div>
+
+      <ul class="project-list">
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>Gigantec</h3>
+          </div>
+          <p class="project-desc">E-commerce de grande volume do grupo. Manutenção e evolução contínua, com foco em performance e estabilidade da plataforma.</p>
+          <div class="project-meta">
+            <span class="chip">Magento</span>
+            <span class="chip">PHP</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS3</span>
+          </div>
+          <div class="project-links">
+            <a href="https://gigantec.com.br" class="project-link">gigantec.com.br</a>
+          </div>
+        </li>
+
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>DataRo</h3>
+          </div>
+          <p class="project-desc">E-commerce na plataforma Tray, ampliando os canais de venda do grupo para o segmento esportivo.</p>
+          <div class="project-meta">
+            <span class="chip">Tray</span>
+          </div>
+          <div class="project-links">
+            <a href="https://www.datarosports.com.br" class="project-link">datarosports.com.br</a>
+          </div>
+        </li>
+
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>Sites institucionais e sistemas internos</h3>
+          </div>
+          <p class="project-desc">Manutenção do site institucional do grupo, do site institucional da Gigantec, do catálogo de produtos e do sistema de intranet interno.</p>
+          <div class="project-links">
+            <a href="https://fagundez.com" class="project-link">fagundez.com</a>
+            <a href="https://institucional.gigantec.com.br" class="project-link">institucional.gigantec.com.br</a>
+            <a href="https://catalogo.fagundez.com" class="project-link">catalogo.fagundez.com</a>
+            <span class="project-link disabled">Intranet (interno, sem link público)</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- GRUPO 2 — AUTÔNOMO -->
+    <section class="project-group">
+      <div class="project-group-head reveal-on-scroll">
+        <h2>Projetos autônomos</h2>
+        <span class="project-group-period">2024 — 2025</span>
+        <p class="project-group-note">SEO técnico aplicado nesses projetos resultou em ~60% de crescimento de tráfego anual, com os blogs entre as páginas mais acessadas dos sites.</p>
+      </div>
+
+      <ul class="project-list">
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>Realiza</h3>
+            <span class="project-period">2024 — 2025</span>
+          </div>
+          <p class="project-desc">Site institucional com blog integrado, usado como principal canal de conteúdo do cliente.</p>
+          <div class="project-meta">
+            <span class="chip">React</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Tailwind CSS</span>
+          </div>
+          <div class="project-links">
+            <a href="https://www.realizajus.com" class="project-link">realizajus.com</a>
+            <a href="https://www.realizajus.com/blog" class="project-link">blog (CMS Ghost)</a>
+          </div>
+        </li>
+
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>Glomb Advogados</h3>
+            <span class="project-period">2024 — 2025</span>
+          </div>
+          <p class="project-desc">Site para escritório de advocacia, com blog integrado para conteúdo institucional e jurídico.</p>
+          <div class="project-meta">
+            <span class="chip">React</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Tailwind CSS</span>
+          </div>
+          <div class="project-links">
+            <a href="https://www.glomb.com.br" class="project-link">glomb.com.br</a>
+          </div>
+        </li>
+
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>Hermes Tech</h3>
+            <span class="project-period">03/2024</span>
+          </div>
+          <p class="project-desc">Landing page para empresa de tecnologia.</p>
+          <div class="project-meta">
+            <span class="chip">React</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Tailwind CSS</span>
+          </div>
+          <div class="project-links">
+            <a href="https://hermestec.com.br" class="project-link">hermestec.com.br</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- GRUPO 3 — NOVOVAREJO -->
+    <section class="project-group">
+      <div class="project-group-head reveal-on-scroll">
+        <h2>Novovarejo.com</h2>
+        <span class="project-group-period">Fevereiro 2021 — Janeiro 2024</span>
+        <p class="project-group-note neutral">Os projetos deste grupo não estão mais no ar — os links de época foram desativados pelos respectivos clientes. As referências abaixo ficam como registro do trabalho, e a ideia é substituir os placeholders por prints reais.</p>
+      </div>
+
+      <ul class="project-list">
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>Lojas online</h3>
+            <span class="project-period">Fora do ar</span>
+          </div>
+          <p class="project-desc">Participação na criação de +20 lojas online com padrão estético consistente e personalizações de acordo com a identidade visual de cada cliente.</p>
+          <div class="project-meta">
+            <span class="chip">React</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Sass</span>
+            <span class="chip">GraphQL</span>
+            <span class="chip">REST API</span>
+          </div>
+          <div class="project-links">
+            <span class="project-link disabled">Fiat Barigui</span>
+            <span class="project-link disabled">Procura Peças</span>
+            <span class="project-link disabled">Barigui Seminovos</span>
+            <span class="project-link disabled">e-Provence Parts</span>
+          </div>
+          <div class="project-image-placeholder">[ print do projeto ]</div>
+        </li>
+
+        <li class="project-item reveal-on-scroll">
+          <div class="project-head">
+            <h3>Sites institucionais</h3>
+            <span class="project-period">Fora do ar</span>
+          </div>
+          <p class="project-desc">Sites institucionais desenvolvidos durante o período na Novovarejo.com.</p>
+          <div class="project-meta">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+          </div>
+          <div class="project-links">
+            <span class="project-link disabled">NVPC</span>
+            <span class="project-link disabled">Mob1</span>
+          </div>
+          <div class="project-image-placeholder">[ print do projeto ]</div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+</div>
+
+<script>
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(function(el){
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

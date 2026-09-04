@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rodolfo Leal — mockup Sobre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14191A;
+    --surface: #1D2422;
+    --line: #2A322F;
+    --ink: #EDEFEC;
+    --ink-muted: #B7BDB8;
+    --aqua: #7FFFD4;
+    --amber: #D9924A;
+    --olive: #9CAE6E;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  .page{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ---------- SIDEBAR "FICHA" (idêntica à Home) ---------- */
+
+  .ficha{
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    padding: 28px 32px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ficha-name{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .ficha-role{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--aqua);
+    margin: 0 0 4px;
+  }
+
+  .ficha-location{
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .ficha-divider{
+    height: 1px;
+    background: var(--line);
+    margin: 18px 0;
+    border: none;
+  }
+
+  .ficha-specs dt{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+
+  .ficha-specs dd{
+    margin: 0 0 12px;
+    font-size: 14px;
+  }
+
+  .stack-chips{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--ink-muted);
+    background: transparent;
+  }
+
+  .ficha-nav{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ficha-nav a{
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--ink-muted);
+    transition: color 0.15s ease;
+  }
+
+  .ficha-nav a:hover,
+  .ficha-nav a:focus-visible{
+    color: var(--ink);
+  }
+
+  .ficha-nav a.active{
+    color: var(--ink);
+  }
+
+  .ficha-footer{
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .btn{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 18px;
+    border-radius: 3px;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn:hover{ transform: translateY(-1px); }
+
+  .btn-filled{
+    background: var(--amber);
+    color: #1A1408;
+  }
+
+  .btn-filled:hover{ opacity: 0.92; }
+
+  .social-links{
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+  }
+
+  .social-links a{
+    text-decoration: none;
+    color: var(--ink-muted);
+    border-bottom: 1px solid transparent;
+  }
+
+  .social-links a:hover,
+  .social-links a:focus-visible{
+    color: var(--ink);
+    border-bottom-color: var(--ink-muted);
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+
+  main{
+    padding: 100px 64px 100px;
+    max-width: 780px;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(8px);
+    animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 0s);
+  }
+
+  @keyframes reveal{
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal-on-scroll{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-on-scroll.in-view{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .page-header h1{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.2vw, 38px);
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+  }
+
+  .lead{
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    max-width: 62ch;
+    margin: 0 0 90px;
+  }
+
+  section + section{ margin-top: 90px; }
+
+  h2{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 0 28px;
+  }
+
+  /* ---------- TIMELINE ---------- */
+
+  .timeline{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .timeline-item{
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 20px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .timeline-marker{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--aqua);
+    padding-top: 3px;
+  }
+
+  .timeline-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-bottom: 4px;
+  }
+
+  .timeline-head h3{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .timeline-period{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .timeline-role{
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin: 0 0 14px;
+  }
+
+  .timeline-content ul{
+    margin: 0;
+    padding-left: 18px;
+    color: var(--ink-muted);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .timeline-content li{ margin-bottom: 6px; }
+  .timeline-content li:last-child{ margin-bottom: 0; }
+
+  /* ---------- SKILLS MARQUEE (idêntica à Home) ---------- */
+
+  .skills-section h2{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-transform: none;
+  }
+
+  .marquee{
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .marquee-track{
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    animation: scroll 32s linear infinite;
+  }
+
+  .marquee:hover .marquee-track{ animation-play-state: paused; }
+
+  @keyframes scroll{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+
+  .marquee .chip{
+    font-size: 13px;
+    padding: 8px 14px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .marquee .chip:nth-child(3n){ border-color: var(--olive); }
+  .marquee .chip:nth-child(4n){ border-color: var(--amber); }
+
+  /* ---------- FORMAÇÃO / IDIOMAS ---------- */
+
+  .formation-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .formation-list li{
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .formation-list li strong{ font-weight: 500; color: var(--ink); }
+  .formation-list li span{ color: var(--ink-muted); font-size: 13px; font-family: 'IBM Plex Mono', monospace; }
+
+  .idiomas p{
+    font-size: 15px;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .idiomas strong{ color: var(--ink); font-weight: 500; }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ animation: none; opacity: 1; transform: none; }
+    .reveal-on-scroll{ opacity: 1; transform: none; transition: none; }
+    .marquee-track{ animation: none; }
+  }
+
+  @media (max-width: 860px){
+    .page{ grid-template-columns: 1fr; }
+    .ficha{
+      position: relative;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+    main{ padding: 56px 24px 64px; }
+    .ficha-footer{ margin-top: 32px; }
+    .timeline-item{ grid-template-columns: 1fr; }
+    .timeline-marker{ padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="ficha">
+    <div class="reveal" style="--d: 0s">
+      <p class="ficha-name">Rodolfo Leal</p>
+      <p class="ficha-role">Desenvolvedor Front-End Pleno</p>
+      <p class="ficha-location">Curitiba, PR</p>
+    </div>
+
+    <hr class="ficha-divider reveal" style="--d: .1s" />
+
+    <dl class="ficha-specs reveal" style="--d: .18s">
+      <dt>Especialização</dt>
+      <dd>E-commerce &amp; performance</dd>
+
+      <dt>Stack principal</dt>
+      <dd>
+        <div class="stack-chips">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">PHP</span>
+        </div>
+      </dd>
+
+      <dt>Idiomas</dt>
+      <dd>Português, Inglês</dd>
+    </dl>
+
+    <hr class="ficha-divider reveal" style="--d: .26s" />
+
+    <nav class="ficha-nav reveal" style="--d: .32s">
+      <a href="#">Home</a>
+      <a href="#" class="active">Sobre</a>
+      <a href="#">Projetos</a>
+    </nav>
+
+    <div class="ficha-footer reveal" style="--d: .4s">
+      <a href="#" class="btn btn-filled">Baixar currículo</a>
+      <div class="social-links">
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h1 class="reveal" style="--d: .75s">Sobre</h1>
+      <p class="lead reveal" style="--d: .85s">Desenvolvedor Front-End Pleno com mais de 5 anos de experiência no desenvolvimento e manutenção de e-commerces, sistemas web e sites institucionais. Atuo principalmente no ecossistema JavaScript (React, Next.js, TypeScript, Tailwind), com experiência também em PHP e plataformas de e-commerce como Magento e Tray. Tenho uma trajetória sólida em e-commerce: participei do desenvolvimento de mais de 20 lojas online na Novovarejo.com, e hoje atuo na manutenção e evolução do e-commerce Gigantec, na Fagundez Distribuição. Também tenho experiência prática em SEO, performance web e construção de interfaces responsivas focadas em experiência do usuário.</p>
+    </section>
+
+    <section>
+      <h2 class="reveal-on-scroll">Experiência profissional</h2>
+      <ol class="timeline">
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-marker">01</span>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <h3>Fagundez Distribuição</h3>
+              <span class="timeline-period">Abril 2025 — atualmente</span>
+            </div>
+            <p class="timeline-role">Desenvolvedor Front-End Pleno</p>
+            <ul>
+              <li>Desenvolvimento e manutenção do e-commerce Gigantec (gigantec.com.br), de grande volume, com Magento, PHP, JavaScript, HTML5 e CSS3.</li>
+              <li>Desenvolvimento e manutenção do e-commerce DataRo (datarosports.com.br) na plataforma Tray, ampliando os canais de venda do grupo.</li>
+              <li>Manutenção de sites institucionais e sistemas internos: fagundez.com, institucional.gigantec.com.br, catalogo.fagundez.com e intranet interna.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-marker">02</span>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <h3>Autônomo</h3>
+              <span class="timeline-period">Março 2024 — Maio 2026</span>
+            </div>
+            <p class="timeline-role">Desenvolvedor Front-End</p>
+            <ul>
+              <li>Desenvolvimento de sites institucionais para clientes de diversos segmentos (incluindo jurídico), com React, Next.js, TypeScript e Tailwind.</li>
+              <li>Implementação de SEO técnico com crescimento de ~60% no tráfego anual dos sites mantidos.</li>
+              <li>Integração de CMS para blogs, com páginas entre as mais acessadas dos sites.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-marker">03</span>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <h3>WeFit</h3>
+              <span class="timeline-period">Maio 2024 — Setembro 2024</span>
+            </div>
+            <p class="timeline-role">Desenvolvedor Front-End</p>
+            <ul>
+              <li>Desenvolvimento e manutenção de sistemas web com React, Next.js, TypeScript e Tailwind.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-marker">04</span>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <h3>Novovarejo.com</h3>
+              <span class="timeline-period">Fevereiro 2021 — Janeiro 2024</span>
+            </div>
+            <p class="timeline-role">Desenvolvedor Front-End</p>
+            <ul>
+              <li>Desenvolvimento e manutenção de mais de 20 lojas online, com React, TypeScript, JavaScript, HTML5 e CSS3.</li>
+              <li>Desenvolvimento e manutenção de sites institucionais.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="skills-section reveal-on-scroll">
+      <h2>Tecnologias</h2>
+      <div class="marquee">
+        <div class="marquee-track">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Tailwind CSS</span>
+          <span class="chip">HTML5</span>
+          <span class="chip">CSS3</span>
+          <span class="chip">PHP</span>
+          <span class="chip">Magento</span>
+          <span class="chip">Tray</span>
+          <span class="chip">SEO</span>
+          <span class="chip">Git</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Figma</span>
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Tailwind CSS</span>
+          <span class="chip">HTML5</span>
+          <span class="chip">CSS3</span>
+          <span class="chip">PHP</span>
+          <span class="chip">Magento</span>
+          <span class="chip">Tray</span>
+          <span class="chip">SEO</span>
+          <span class="chip">Git</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Figma</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="reveal-on-scroll">Formação e certificações</h2>
+      <ul class="formation-list reveal-on-scroll">
+        <li><strong>Tecnólogo em Análise e Desenvolvimento de Sistemas</strong> — Universidade Positivo <span>2019</span></li>
+        <li><strong>AWS Certified Cloud Practitioner</strong> — AWS <span>Certificação</span></li>
+        <li><strong>ReactJS</strong> — Rocketseat <span>50h</span></li>
+        <li><strong>Clean Code</strong> — Rocketseat <span>Curso</span></li>
+        <li><strong>Redux + Zustand</strong> — Rocketseat <span>Curso</span></li>
+        <li><strong>Produtividade com IA</strong> — Rocketseat <span>Curso</span></li>
+      </ul>
+    </section>
+
+    <section class="idiomas reveal-on-scroll">
+      <h2>Idiomas</h2>
+      <p><strong>Inglês</strong> — Avançado</p>
+    </section>
+  </main>
+
+</div>
+
+<script>
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(function(el){
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
