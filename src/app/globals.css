@@ -1,26 +1,144 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Design tokens — direção "Ficha Técnica", dark mode único */
+  --color-bg: #14191a;
+  --color-surface: #1d2422;
+  --color-line: #2a322f;
+  --color-ink: #edefec;
+  --color-ink-muted: #b7bdb8;
+  --color-aqua: #7fffd4;
+  --color-amber: #d9924a;
+  --color-olive: #9cae6e;
+
+  /* Texto sobre o CTA âmbar */
+  --color-on-amber: #1a1408;
+
+  --font-display: var(--font-archivo), sans-serif;
+  --font-sans: var(--font-plex-sans), sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
+
+  /* Breakpoint da sidebar: acima disso vira coluna fixa (mockups usam 860px) */
+  --breakpoint-side: 53.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    background-color: var(--color-bg);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-aqua);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* ---------- Reveal de carregamento (Home) ---------- */
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 0s);
+  }
+
+  @keyframes reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ---------- Reveal por scroll (Sobre / Projetos) ---------- */
+
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- Marquee de tecnologias ---------- */
+
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    animation: marquee-scroll 32s linear infinite;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/*
+ * Acentos esporádicos nas chips do marquee. Fica fora de `@layer` de propósito:
+ * dentro de `components` o `border-line` das chips (layer `utilities`) venceria.
+ */
+.marquee-track > *:nth-child(3n) {
+  border-color: var(--color-olive);
+}
+
+.marquee-track > *:nth-child(4n) {
+  border-color: var(--color-amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
 }
