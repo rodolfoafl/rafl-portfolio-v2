@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Chip } from "@/components/ui/Chip";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import type {
@@ -91,9 +93,25 @@ export function ProjectGroup({ group }: { group: ProjectGroupData }) {
                 ))}
               </div>
 
-              {item.imagePlaceholder && (
-                <div className="mt-3 rounded-[3px] border border-dashed border-line p-5 text-center font-mono text-xs text-ink-muted">
-                  [ print do projeto ]
+              {item.images && item.images.length > 0 && (
+                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {item.images.map((image) => (
+                    <figure key={image.caption} className="m-0">
+                      {/* Prints têm proporções diferentes: moldura fixa + corte pelo topo mantém os cards alinhados. */}
+                      <div className="aspect-[2/1] overflow-hidden rounded-[3px] border border-line bg-surface">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          placeholder="blur"
+                          sizes="(min-width: 53.75rem) 346px, (min-width: 40rem) 50vw, 100vw"
+                          className="h-full w-full object-cover object-top"
+                        />
+                      </div>
+                      <figcaption className="mt-2 font-mono text-xs text-ink-muted">
+                        {image.caption}
+                      </figcaption>
+                    </figure>
+                  ))}
                 </div>
               )}
             </RevealOnScroll>

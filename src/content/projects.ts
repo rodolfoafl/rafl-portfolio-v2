@@ -1,3 +1,17 @@
+import type { StaticImageData } from "next/image";
+
+import eProvenceParts from "../../public/projetos/novovarejo/loja-online-2.webp";
+import fiatBarigui from "../../public/projetos/novovarejo/loja-online-1.webp";
+import mob1 from "../../public/projetos/novovarejo/mob1.webp";
+import nvpc from "../../public/projetos/novovarejo/nvpc-company.webp";
+
+export interface ProjectImage {
+  /** Import estático: o Next infere largura/altura e gera o blur placeholder. */
+  src: StaticImageData;
+  alt: string;
+  caption: string;
+}
+
 export interface ProjectLink {
   label: string;
   /** `null` → renderiza como texto neutro, nunca como link quebrado. */
@@ -11,7 +25,7 @@ export interface Project {
   links: ProjectLink[];
   period?: string;
   status?: "offline";
-  imagePlaceholder?: boolean;
+  images?: ProjectImage[];
 }
 
 export interface ProjectGroup {
@@ -108,7 +122,7 @@ export const projectGroups: ProjectGroup[] = [
   {
     company: "Novovarejo.com",
     period: "Fevereiro 2021 — Janeiro 2024",
-    note: "Os projetos deste grupo não estão mais no ar — os links de época foram desativados pelos respectivos clientes. As referências ficam como registro do trabalho; placeholders de print devem ser substituídos por imagens reais assim que disponíveis.",
+    note: "Os projetos deste grupo não estão mais no ar — os links de época foram desativados pelos respectivos clientes. As referências e prints abaixo ficam como registro do trabalho.",
     noteTone: "neutral",
     items: [
       {
@@ -130,7 +144,18 @@ export const projectGroups: ProjectGroup[] = [
           { label: "Barigui Seminovos", url: null },
           { label: "e-Provence Parts", url: null },
         ],
-        imagePlaceholder: true,
+        images: [
+          {
+            src: fiatBarigui,
+            alt: "Página inicial da loja online Fiat Barigui, com busca de peças e banner de peças originais.",
+            caption: "Fiat Barigui",
+          },
+          {
+            src: eProvenceParts,
+            alt: "Página inicial da loja online e-Provence Parts, com busca de peças e banner de peças genuínas.",
+            caption: "e-Provence Parts",
+          },
+        ],
       },
       {
         name: "Sites institucionais",
@@ -142,7 +167,18 @@ export const projectGroups: ProjectGroup[] = [
           { label: "NVPC", url: null },
           { label: "Mob1", url: null },
         ],
-        imagePlaceholder: true,
+        images: [
+          {
+            src: nvpc,
+            alt: "Página inicial do site institucional da NVPC, com a chamada “Criamos novas possibilidades para o novo varejo online”.",
+            caption: "NVPC",
+          },
+          {
+            src: mob1,
+            alt: "Página do site institucional da Mob1, com as etapas Comece, Inove e Cresça e formulário de contato.",
+            caption: "Mob1",
+          },
+        ],
       },
     ],
   },
