@@ -42,8 +42,13 @@
 @layer components {
   /* ---------- Reveal de carregamento (Home) ---------- */
 
+  /*
+   * Parte de 0.01, não de 0: o Chrome ignora conteúdo com opacity 0 no First
+   * Contentful Paint e, como a página inteira entra por reveal, o Lighthouse
+   * falhava com NO_FCP. Visualmente é idêntico.
+   */
   .reveal {
-    opacity: 0;
+    opacity: 0.01;
     transform: translateY(8px);
     animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: var(--d, 0s);
@@ -58,6 +63,11 @@
 
   /* ---------- Reveal por scroll (Sobre / Projetos) ---------- */
 
+  /*
+   * Aqui fica 0 de propósito: o topo das páginas usa `.reveal`, então o FCP não
+   * depende destes elementos, e com 0.01 o axe os trata como visíveis e acusa
+   * contraste ~1:1 em tudo que está abaixo da dobra.
+   */
   .reveal-on-scroll {
     opacity: 0;
     transform: translateY(14px);
