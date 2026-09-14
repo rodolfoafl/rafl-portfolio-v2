@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 
 import { Sidebar } from "@/components/layout/Sidebar";
-import { profile } from "@/content/profile";
+import { profile, siteUrl } from "@/content/profile";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -30,8 +30,53 @@ const description =
   "Desenvolvedor Front-End Pleno com mais de 5 anos de experiência em e-commerce, performance web e SEO. React, Next.js, TypeScript, Magento e Tray.";
 
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.role}`,
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${profile.name} — ${profile.role}`,
+    template: `%s — ${profile.name}`,
+  },
   description,
+  authors: [{ name: profile.name, url: siteUrl }],
+  creator: profile.name,
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: siteUrl,
+    siteName: profile.name,
+    title: `${profile.name} — ${profile.role}`,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} — ${profile.role}`,
+    description,
+  },
+  alternates: { canonical: "/" },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.role,
+  url: siteUrl,
+  email: `mailto:${profile.email}`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Curitiba",
+    addressRegion: "PR",
+    addressCountry: "BR",
+  },
+  knowsAbout: [
+    "E-commerce",
+    "Performance web",
+    "SEO",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Magento",
+  ],
+  sameAs: [profile.social.github, profile.social.linkedin],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -56,6 +101,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Sidebar />
           {children}
         </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </body>
     </html>
   );
