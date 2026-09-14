@@ -262,14 +262,14 @@ export const projectGroups = [
   },
   {
     company: "Projetos autônomos",
-    period: "2024 — 2025",
+    period: "2024 — 2026",
     note: "SEO técnico aplicado nesses projetos resultou em ~60% de crescimento de tráfego anual, com os blogs entre as páginas mais acessadas dos sites.",
     items: [
       {
         name: "Realiza",
         description: "Site institucional com blog integrado, usado como principal canal de conteúdo do cliente.",
         tech: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-        period: "2024 — 2025",
+        period: "2024 — 2026",
         links: [
           { label: "realizajus.com", url: "https://www.realizajus.com" },
           { label: "blog (CMS Ghost)", url: "https://www.realizajus.com/blog" },
@@ -279,7 +279,7 @@ export const projectGroups = [
         name: "Glomb Advogados",
         description: "Site para escritório de advocacia, com blog integrado para conteúdo institucional e jurídico.",
         tech: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-        period: "2024 — 2025",
+        period: "2024 — 2026",
         links: [{ label: "glomb.com.br", url: "https://www.glomb.com.br" }],
       },
       {
@@ -327,7 +327,7 @@ export const projectGroups = [
 ];
 ```
 
-Regra de renderização: se `link.url` for `null`, renderizar como texto neutro (não clicável, cor `ink-muted`) em vez de link em `aqua` — mesmo tratamento visual usado nos mockups pra "sem link público"/"fora do ar". Itens com `imagePlaceholder: true` devem renderizar uma caixa tracejada com o texto `[ print do projeto ]` até as imagens reais serem adicionadas.
+Regra de renderização: se `link.url` for `null`, renderizar como texto neutro (não clicável, cor `ink-muted`) em vez de link em `aqua` — mesmo tratamento visual usado nos mockups pra "sem link público"/"fora do ar". Itens com `images` renderizam uma galeria de prints (ver desvio 7 no fim do documento).
 
 ---
 
@@ -394,14 +394,14 @@ Os 3 arquivos abaixo (em `design-reference/`) são a fonte da verdade do visual 
 
 ## 12. Plano de execução (fases)
 
-- [ ] **Fase 0 — Scaffold:** `create-next-app`, Tailwind configurado com os design tokens (seção 3), fontes via `next/font/google` (seção 4), estrutura de pastas (seção 5).
-- [ ] **Fase 1 — Layout base:** `Sidebar.tsx` completo e funcional (nav com estado ativo por rota), grid de 2 colunas no `layout.tsx`, breakpoint mobile.
-- [ ] **Fase 2 — Conteúdo tipado:** criar todos os arquivos em `src/content/` com os dados da seção 6.
-- [ ] **Fase 3 — Home:** `Hero`, `Stats`, `SkillsMarquee`, coreografia de reveal no carregamento.
-- [ ] **Fase 4 — Sobre:** header + `Timeline` + `SkillsMarquee` reaproveitado + formação/idiomas, com `RevealOnScroll`.
-- [ ] **Fase 5 — Projetos:** `ProjectGroup` (com tratamento de links `null` e `imagePlaceholder`), `RevealOnScroll`.
-- [ ] **Fase 6 — Currículo e metadata:** PDF em `/public/resume`, metadata/OG por página, sitemap, robots, JSON-LD.
-- [ ] **Fase 7 — Polimento:** conferir os dois bugs de responsividade da seção 9, testar `prefers-reduced-motion`, contraste de cores, navegação por teclado (`:focus-visible` já usado nos mockups).
+- [x] **Fase 0 — Scaffold:** `create-next-app`, Tailwind configurado com os design tokens (seção 3), fontes via `next/font/google` (seção 4), estrutura de pastas (seção 5).
+- [x] **Fase 1 — Layout base:** `Sidebar.tsx` completo e funcional (nav com estado ativo por rota), grid de 2 colunas no `layout.tsx`, breakpoint mobile.
+- [x] **Fase 2 — Conteúdo tipado:** criar todos os arquivos em `src/content/` com os dados da seção 6.
+- [x] **Fase 3 — Home:** `Hero`, `Stats`, `SkillsMarquee`, coreografia de reveal no carregamento.
+- [x] **Fase 4 — Sobre:** header + `Timeline` + `SkillsMarquee` reaproveitado + formação/idiomas, com `RevealOnScroll`.
+- [x] **Fase 5 — Projetos:** `ProjectGroup` (com tratamento de links `null` e `imagePlaceholder`), `RevealOnScroll`.
+- [x] **Fase 6 — Currículo e metadata:** `public/resume/curriculo-rodolfo-leal.pdf` servindo em 200, metadata/OG por página, `sitemap.ts`, `robots.ts` e JSON-LD `Person`.
+- [x] **Fase 7 — Polimento:** verificado em Chrome real (Playwright) a 1440px e 360px. Zero overflow horizontal nas 3 páginas, os dois bugs da seção 9 não ocorrem, os 20 elementos `reveal-on-scroll` revelam corretamente ao rolar, e `prefers-reduced-motion` deixa tudo em `opacity: 1` com o marquee parado. `:focus-visible` global em aqua e skip link "Pular para o conteúdo". `favicon.ico` do scaffold removido; ícones via convenção de arquivos do App Router em `src/app/`: `icon1.svg`, `icon2.png` (32px), `icon3.png` (16px) e `apple-icon.png` (180px); o de 512px fica em `public/icon-512.png`, referenciado pelo `src/app/manifest.ts`.
 - [ ] **Fase 8 — Deploy:** publicar na Vercel (mesmo domínio ou um novo), conferir Lighthouse (performance/SEO/acessibilidade).
 
 ## 13. Critérios de aceite
@@ -416,5 +416,15 @@ Os 3 arquivos abaixo (em `design-reference/`) são a fonte da verdade do visual 
 
 ## Observações finais
 
-- Currículo (PDF) já atualizado e sincronizado com este conteúdo — está em `Curriculo_Rodolfo_Leal.docx`/`.pdf`, gerado em conversa anterior.
+- Currículo (PDF) já atualizado e sincronizado com este conteúdo — está em `public/resume/curriculo-rodolfo-leal.pdf`.
+### Desvios do plano feitos na implementação
+
+1. **Sem `tailwind.config.ts`** (seção 3). O projeto usa Tailwind v4, que é CSS-first: os tokens estão em `@theme` dentro de `src/app/globals.css`. O breakpoint de 860px virou o breakpoint nomeado `side` (`--breakpoint-side: 53.75rem`), usado em min-width — ou seja, o CSS é mobile-first e `side:` aplica o layout de 2 colunas, em vez do `max-width: 860px` dos mockups.
+2. **`education.certifications` é uma lista de objetos**, não de strings (seção 6.5). Os mockups renderizam cada certificação com um rótulo mono à direita ("Certificação", "50h", "Curso"), o que exige `{ title, issuer, tag }`.
+3. **`home.ctas` ganhou `external: boolean`** para o `Button` decidir entre `next/link` e `<a>` (o CTA "Fale comigo" é `mailto:`).
+4. **`projectGroups[].noteTone`** foi adicionado para reproduzir a variação `.project-group-note.neutral` do mockup de Projetos.
+5. **`turbopack.root` fixado em `next.config.ts`** para silenciar o aviso de `package-lock.json` encontrado fora do repositório.
+6. **O grid do layout usa `grid-cols-1` explícito no mobile.** Sem isso o track implícito `auto` cresce até o `max-width` do `<main>` (900px na Home) e estoura a viewport — dava overflow horizontal real a 360px.
+7. **`imagePlaceholder` virou `images: ProjectImage[]`** (`{ src, alt, caption }`, com `src` por import estático de `public/projetos/novovarejo/`). O `ProjectGroup` renderiza uma galeria com `next/image` (blur placeholder, grid de 2 colunas a partir de `sm`, moldura `aspect-[2/1]` com `object-top`, já que os prints têm proporções entre 1,75 e 2,2). Há prints só da Fiat Barigui e da e-Provence Parts (lojas) e da NVPC e Mob1 (institucionais); Procura Peças e Barigui Seminovos seguem sem print, sem placeholder. A frase da nota do grupo Novovarejo sobre "substituir placeholders" foi removida.
+
 - Decisão registrada: **não incluir experiências profissionais anteriores a Novovarejo.com** (2 estágios + 1 experiência informal) nem no currículo nem no site — o currículo já está solidificado como Pleno com 4 experiências relevantes, e adicionar entradas mais antigas dilui a narrativa de senioridade.
